@@ -1,0 +1,37 @@
+class Solution {
+public:
+bool if_possible(vector<int>arr,int m,int k,int mid){
+    int cnt=0,bq=0;
+    for(int bloom:arr){
+        if(bloom<=mid){
+            cnt++;
+            if(cnt==k){
+                bq++;
+                cnt=0;
+            }
+        }
+        else{
+            cnt=0;
+        }
+    }
+    return bq>=m;
+}
+    int minDays(vector<int>& bloomday, int m, int k) {
+        int total=1LL*m*k;
+        if(total>bloomday.size()) return -1;
+        int low=*min_element(bloomday.begin(),bloomday.end());
+        int high=*max_element(bloomday.begin(),bloomday.end());
+        int result = -1;
+        while(low<=high){
+            int mid=(low+high)/2;
+            if(if_possible(bloomday,m,k,mid)){
+                result=mid;
+                high=mid-1;        
+            }
+            else{
+            low=mid+1;
+            }
+        }
+       return result; 
+    }
+};
